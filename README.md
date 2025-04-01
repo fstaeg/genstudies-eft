@@ -2,7 +2,7 @@
 
 Clone repository:
 ```sh
-git clone git@github.com:fstaeg/dy-eft-study.git
+git clone https://github.com/dy-eft-study.git
 ```
 
 Setup:
@@ -15,12 +15,12 @@ cd -
 
 Create ROOT tree from the LHE files:
 ```sh
-python scripts/lhe_to_tree.py -i DY_sm
+python scripts/lhe_to_tree.py -i DY_SM
 ```
 
 Look at contents of the ROOT file using TBrowser (have to use `ssh -Y user@linux.physik.uzh.ch` for this to work):
 ```sh
-root -l DY_sm/events.root
+root -l DY_SM/events.root
 ```
 
 ```cpp
