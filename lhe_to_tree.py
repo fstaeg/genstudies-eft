@@ -1,6 +1,6 @@
+from __future__ import print_function
 import ROOT
 import os
-import sys
 from array import array
 from argparse import ArgumentParser
 ROOT.gROOT.ProcessLine('#include "LHEF.h"')
@@ -121,7 +121,7 @@ for infile in infiles:
             l_phi.clear()
 
             # print a status update every 10000 events
-            if nevent % 10000 == 0: print 'done %s events' % nevent
+            if nevent % 10000 == 0: print('done %s events' % nevent)
 
     os.system('gzip %s' % infile) # compress the file again
 
