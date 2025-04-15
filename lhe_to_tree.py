@@ -1,25 +1,25 @@
-from __future__ import print_function
 import ROOT
 import os
 from array import array
 from argparse import ArgumentParser
-ROOT.gROOT.ProcessLine('#include "LHEF.h"')
+ROOT.gROOT.ProcessLine('#include "EFT2Obs/LHEF.h"')
 
 parser = ArgumentParser()
-parser.add_argument('-i', '--input', default=None, help='directory with input LHE files')
-parser.add_argument('-o', '--output', default='events.root', help='name of output ROOT file')
-parser.add_argument('-n', '--nfiles', type=int, default=None, help='only run on the first n files')
+parser.add_argument('-d', '--directory', default=None, help='directory of input LHE files and for output ROOT file')
+parser.add_argument('-f', '--filename', default='events.root', help='name of output ROOT file')
+parser.add_argument('-n', '--nfiles', type=int, default=None, help='only run on the first n input files')
 args = parser.parse_args()
 
 # create the root file
-outfile = ROOT.TFile(os.path.join(args.input, args.output), 'RECREATE') 
+outfile = ROOT.TFile(os.path.join(args.directory, args.filename), 'RECREATE') 
 
 # define variables 
 # arrays for variables with one entry per event, 
 # vectors for variables with multiple entries per event
-weight = array('d',[0.0])
 mll = array('d',[0.0])
 yll = array('d',[0.0])
+sm_weight = array('d',[0.0])
+smeft_weight = ROOT.std.vector('double')()
 l_pdgid = ROOT.std.vector('int')()
 l_px = ROOT.std.vector('double')()
 l_py = ROOT.std.vector('double')()
@@ -32,9 +32,10 @@ l_phi = ROOT.std.vector('double')()
 # create ROOT tree and add branches
 # note the different syntax for branches with one or multiple entries per event
 ttree = ROOT.TTree('events','tree of generated events')
-ttree.Branch('EventWeight', weight, 'EventWeight/D')
 ttree.Branch('mll', mll, 'mll/D')
 ttree.Branch('yll', yll, 'yll/D')
+ttree.Branch('EventWeight_SM', sm_weight, 'EventWeight_SM/D')
+ttree.Branch('EventWeight_SMEFT', smeft_weight)
 ttree.Branch('Lepton_pdgId',l_pdgid)
 ttree.Branch('Lepton_px',   l_px)
 ttree.Branch('Lepton_py',   l_py)
@@ -45,7 +46,7 @@ ttree.Branch('Lepton_eta',  l_eta)
 ttree.Branch('Lepton_phi',  l_phi)
 
 # get all the events_{n}.lhe.gz files in the input directory
-infiles = [f for f in os.listdir(args.input) if f.startswith('events_') and f.endswith('.lhe.gz')]
+infiles = [f for f in os.listdir(args.directory) if f.startswith('events_') and f.endswith('.lhe.gz')]
 infiles = sorted(infiles, key=lambda x: float(x[7:-7])) # sort them
 if args.nfiles is not None: 
     infiles = infiles[:args.nfiles]
@@ -54,7 +55,7 @@ nevent = 0
 
 # loop over input files
 for infile in infiles:
-    infile = os.path.join(args.input, infile)
+    infile = os.path.join(args.directory, infile)
     os.system('gunzip %s' % infile) # decompress the file
     infile = infile.replace('.gz','')
     reader = ROOT.LHEF.Reader(infile)
@@ -66,7 +67,11 @@ for infile in infiles:
         
         for event in subevents:
             nevent += 1
-            weight[0] = reader.hepeup.weights[0].first # event weight
+            sm_weight[0] = reader.hepeup.weights[0].first # event weight
+            # loop over the event weights from SMEFTsim
+            for i in range(1,len(reader.hepeup.weights)):
+                smeft_weight.push_back(reader.hepeup.weights[i].first)
+            
             leptons = []
             
             # loop over particles in the event
@@ -108,9 +113,10 @@ for infile in infiles:
             # fill the tree and reset variables before moving to the next event 
             ttree.Fill()
 
-            weight[0] = 0.0
             mll[0] = 0.0
             yll[0] = 0.0
+            sm_weight[0] = 0.0
+            smeft_weight.clear()
             l_pdgid.clear()
             l_px.clear()
             l_py.clear()
