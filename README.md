@@ -1,8 +1,8 @@
-# dy-eft-study
+# genstudies-eft
 
 Clone repository:
 ```sh
-git clone --recurse-submodules https://github.com/fstaeg/dy-eft-study.git
+git clone --recurse-submodules https://github.com/fstaeg/genstudies-eft.git
 ```
 
 Setup (should be sourced at the start of each new session):
@@ -102,7 +102,7 @@ python scripts/launch_jobs.py --gridpack gridpack_dy-SMEFTsim3.tar.gz \
 - this will generate a total of 100k events split in 10 jobs that run in parallel
 - in the last line, we set the option to stop after generating the LHE files. By default it would run the showering with Pythia8 and run a Rivet routine (for now we do not want that)
 
-3) We are done. The generated LHE files are saved in `dy-SMEFTsim3/events_{N}.lhe.gz`. Move them to the `dy-eft-studies` directory:
+3) We are done. The generated LHE files are saved in `dy-SMEFTsim3/events_{N}.lhe.gz`. Move them to the `genstudies-eft` directory:
 ```sh
 cp -r dy-SMEFTsim3 ..
 cd ..
