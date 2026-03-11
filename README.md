@@ -19,7 +19,7 @@ pip install fastjet
 
 ## Generating events
 
-Event samples with SMEFT weights included are generated using the `EFT2Obs` tool. Detailed instructions are in [EventGeneration.md](EventGeneration.md) or in the EFT2Obs [README](EFT2Obs/README.md).
+Event samples with SMEFT weights included are generated using the `EFT2Obs` tool. Detailed instructions are in [EventGeneration.md](EventGeneration.md) or in [EFT2Obs/README.md](https://github.com/ajgilbert/EFT2Obs/blob/master/README.md)).
 
 1) Install EFT2Obs
 ```sh
