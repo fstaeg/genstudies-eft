@@ -1,20 +1,17 @@
-To generate the samples with SMEFT weights included, we use the `EFT2Obs` tool, which is included in this repository as a submodule. The cards for DY production are in `eft2obs_cards/DYjets-SMEFTsim3`.
+To generate the samples with SMEFT weights included, we use the [`EFT2Obs`](https://github.com/ajgilbert/EFT2Obs/) tool, which is included in this repository as a submodule. The cards for DY production are in `eft2obs_cards/DYjets-SMEFTsim3`.
 
 ## Installing EFT2Obs
 
 ```sh
 source /cvmfs/sft.cern.ch/lcg/views/LCG_106/x86_64-el9-gcc13-opt/setup.sh
-# doesn't work, use CMSSW_14_1_0_pre4
 
 cd EFT2Obs
 git checkout master
 git pull
 source env.sh # should be sourced at the start of each new session
 
-# Installing MG5_aMC@NLO and Pythia8
+# Installing MG5_aMC@NLO, Pythia8, and the SMEFTsim3 model
 ./scripts/setup_mg5.sh
-
-# Installing the SMEFTsim3 model
 ./scripts/setup_model_SMEFTsim3.sh
 ```
 
