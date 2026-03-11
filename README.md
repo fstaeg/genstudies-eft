@@ -55,7 +55,7 @@ python scripts/launch_jobs.py --gridpack gridpack_DYjets-SMEFTsim3.tar.gz \
 1) Read the HepMC or LHE samples and save the events in a .pkl file
 ```sh
 python read_events.py \
- -i event_samples/DYjets-SMEFTsim3/events_{1..10}.hepmc.gz \
+ -i EFT2Obs/DYjets-SMEFTsim3/events_{1..10}.hepmc.gz \
  -o DYjets/events.pkl --parallel 10
 # options
 #   -i {files}: input HepMC or LHE files
