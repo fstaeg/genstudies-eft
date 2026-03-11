@@ -1,0 +1,45 @@
+{
+    "blocks": [
+        "SMEFT"
+    ],
+    "inactive": {
+        "default_val": 0.0,
+        "parameters": []
+    },
+    "parameter_defaults": {
+        "block": "SMEFT",
+        "gen": 0.0,
+        "sm": 0.0,
+        "val": 1.0
+    },
+    "parameters": [
+        {
+            "index": 108,
+            "name": "clj1"
+        },
+        {
+            "index": 109,
+            "name": "clj3"
+        },
+        {
+            "index": 113,
+            "name": "ceu"
+        },
+        {
+            "index": 115,
+            "name": "ced"
+        },
+        {
+            "index": 117,
+            "name": "cje"
+        },
+        {
+            "index": 119,
+            "name": "clu"
+        },
+        {
+            "index": 121,
+            "name": "cld"
+        }
+    ]
+}
